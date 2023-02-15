@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Beverages {
+  UID String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name  String
+  type  String
+  price Int
+  description String  
+  volume Int      
+  alcPercentage Int
+}
+
+model Snacks {
+  UID String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name  String
+  type  String
+  price Int
+  description String  
+}
+
