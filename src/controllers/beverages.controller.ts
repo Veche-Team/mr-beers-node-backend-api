@@ -30,10 +30,8 @@ const getOneBeverage = async (req: Request, res: Response) => {
 
 const createBeverage = async (req: Request, res: Response) => { 
   const { name, type, price, description, volume, alcPercentage } = req.body;
-  try {
-    const rap = 'trap';
-    
-    const result = await prisma.beverages.create({
+  try {   
+    const createPayload = {
       data: {
         name, 
         type,
@@ -42,8 +40,18 @@ const createBeverage = async (req: Request, res: Response) => {
         volume,
         alcPercentage,
       },
+    };
+    const isBeverageNameExists = await prisma.beverages.findFirst({
+      where: { name },
     });
-    return res.status(200).json({ msg: `Beverage was created:` });
+
+    if (isBeverageNameExists) {
+      return res.status(400).json({ msg: 'Beverage with this name already exists', existingBeverage: isBeverageNameExists })
+    }
+
+    const createdBeverage = await prisma.beverages.create(createPayload);
+    
+    return res.status(200).json({ msg: `Beverage was created`, createdBeverage });
   } catch (error) {
     const errorMessage = (error as Error).message;
     return res.status(400).json({ msg: errorMessage });
