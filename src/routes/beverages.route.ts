@@ -7,9 +7,7 @@ const beveragesRouter = Router();
 beveragesRouter.get('/', beveragesController.getBeverages); 
 beveragesRouter.get('/:beverageUID', beveragesController.getOneBeverage); 
 beveragesRouter.post('/add-beverage', beveragesController.createBeverage); 
-// beveragesRouter.put('/:artistId', beveragesController.edit); 
-// beveragesRouter.delete('/:artistId', beveragesController.deleteBeverage); 
-
-// beveragesRouter.post('/get-artist', beveragesController.getOne); 
+beveragesRouter.delete('/:beverageUID', beveragesController.deleteBeverage); 
+beveragesRouter.put('/:beverageUID', beveragesController.editBeverage); 
 
 export default beveragesRouter;

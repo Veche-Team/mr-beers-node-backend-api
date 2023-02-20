@@ -13,10 +13,10 @@ model Beverages {
   updatedAt DateTime @updatedAt
   name  String
   type  String
-  price Int
+  price Float
   description String  
-  volume Int      
-  alcPercentage Int
+  volume Float      
+  alcPercentage Float
 }
 
 model Snacks {
@@ -25,7 +25,7 @@ model Snacks {
   updatedAt DateTime @updatedAt
   name  String
   type  String
-  price Int
+  price Float
   description String  
 }
 
