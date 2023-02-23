@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 
+import { OBJECT_NOT_FOUND } from "../consts/errors.const";
+
 const prisma = new PrismaClient();
 
 const getSnacks = async (req: Request, res: Response) => {
@@ -22,7 +24,13 @@ const getOneSnack = async (req: Request, res: Response) => {
     });
 
     if (!snack) {
-      return res.status(400).json({ msg: 'Snack with this UID doesn`t exist', snackUID })
+      return res
+        .status(400)
+        .json({
+            data: null,
+            error: OBJECT_NOT_FOUND,
+            errorDscription: "Snack with this UID doesn`t exist", 
+            snackUID });
     }
 
     return res.status(200).json({ data: snack });
@@ -68,8 +76,14 @@ const deleteSnack = async (req: Request, res: Response) => {
     });
 
     if (!snack) {
-      return res.status(400).json({ msg: 'Snack with this UID doesn`t exist', snackUID })
-    }
+        return res
+          .status(400)
+          .json({
+              data: null,
+              error: OBJECT_NOT_FOUND,
+              errorDscription: "Snack with this UID doesn`t exist", 
+              snackUID });
+      }
 
     const deletedSnack = await prisma.snacks.delete({
       where: { UID: snackUID },
@@ -91,8 +105,14 @@ const editSnack = async (req: Request, res: Response) => {
     });
 
     if (!snack) {
-      return res.status(400).json({ msg: 'Snack with this UID doesn`t exist', snackUID })
-    }
+        return res
+          .status(400)
+          .json({
+              data: null,
+              error: OBJECT_NOT_FOUND,
+              errorDscription: "Snack with this UID doesn`t exist", 
+              snackUID });
+      }
 
     const updatedSnack = await prisma.snacks.update({
       where: { UID: snackUID },
