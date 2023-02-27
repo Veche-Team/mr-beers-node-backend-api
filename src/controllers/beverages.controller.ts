@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 
-import { OBJECT_NOT_FOUND } from "../consts/errors.const";
+import { OBJECT_NOT_FOUND, INCORRECT_PAYLOAD } from "../consts/errors.const";
 
 const prisma = new PrismaClient();
 
@@ -29,7 +29,7 @@ const getOneBeverage = async (req: Request, res: Response) => {
         .json({
             data: null,
             error: OBJECT_NOT_FOUND,
-            errorDscription: "Snack with this UID doesn`t exist", 
+            errorDscription: "Beverage with this UID doesn`t exist", 
             beverage });
     }
 
@@ -62,13 +62,9 @@ const createBeverage = async (req: Request, res: Response) => {
         .status(400)
         .json({
             existingBeverage: isBeverageNameExists,
-            error: OBJECT_NOT_FOUND,
-            errorDscription: "Beverage with this name already exists", 
-            beverage });
-    }
-
-    if (isBeverageNameExists) {
-      return res.status(400).json({ msg: 'Beverage with this name already exists', existingBeverage: isBeverageNameExists })
+            error: INCORRECT_PAYLOAD,
+            errorDscription: "Beverage with this name already exists"
+          });
     }
 
     const createdBeverage = await prisma.beverages.create(createPayload);
@@ -93,7 +89,7 @@ const deleteBeverage = async (req: Request, res: Response) => {
         .json({
             data: null,
             error: OBJECT_NOT_FOUND,
-            errorDscription: "Snack with this UID doesn`t exist", 
+            errorDscription: "Beverage with this UID doesn`t exist", 
             beverage });
     }
 
@@ -122,7 +118,7 @@ const editBeverage = async (req: Request, res: Response) => {
         .json({
             data: null,
             error: OBJECT_NOT_FOUND,
-            errorDscription: "Snack with this UID doesn`t exist", 
+            errorDscription: "Beverage with this UID doesn`t exist", 
             beverage });
     }
 

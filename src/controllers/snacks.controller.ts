@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 
-import { OBJECT_NOT_FOUND } from "../consts/errors.const";
+import { OBJECT_NOT_FOUND, INCORRECT_PAYLOAD } from "../consts/errors.const";
 
 const prisma = new PrismaClient();
 
@@ -56,8 +56,14 @@ const createSnack = async (req: Request, res: Response) => {
     });
 
     if (isSnackNameExists) {
-      return res.status(400).json({ msg: 'Snack with this name already exists', existingSnack: isSnackNameExists })
-    }
+        return res
+          .status(400)
+          .json({
+              existingSnack: isSnackNameExists,
+              error: INCORRECT_PAYLOAD,
+              errorDscription: "Snack with this name already exists"
+            });
+      }
 
     const createdSnack = await prisma.snacks.create(createPayload);
     
