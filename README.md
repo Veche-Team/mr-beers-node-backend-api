@@ -1,3 +1,6 @@
+# Render server 
+https://mr-beers-backend.onrender.com/api
+
 # Guide to setup backend server locally
 
 ### 1. Download and install node.js 
