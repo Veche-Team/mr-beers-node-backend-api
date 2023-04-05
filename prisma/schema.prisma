@@ -17,6 +17,9 @@ model Beverages {
   description String  
   volume Float      
   alcPercentage Float
+  imagePath String?
+
+   @@unique(fields: [name])
 }
 
 model Snacks {
@@ -26,6 +29,9 @@ model Snacks {
   name  String
   type  String
   price Float
-  description String  
+  description String
+  imagePath String?
+
+   @@unique(fields: [name])
 }
 

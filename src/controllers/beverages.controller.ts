@@ -41,7 +41,11 @@ const getOneBeverage = async (req: Request, res: Response) => {
 };
 
 const createBeverage = async (req: Request, res: Response) => { 
-  const { name, type, price, description, volume, alcPercentage } = req.body;
+  let { name, type, price, description, volume, alcPercentage } = req.body;
+  price = parseInt(price);
+  volume = parseInt(volume);
+  alcPercentage = parseInt(alcPercentage);
+  const imagePath = req.file?.path;
   try {   
     const createPayload = {
       data: {
@@ -51,8 +55,10 @@ const createBeverage = async (req: Request, res: Response) => {
         description,
         volume,
         alcPercentage,
+        imagePath
       },
     };
+
     const isBeverageNameExists = await prisma.beverages.findFirst({
       where: { name },
     });
@@ -61,9 +67,9 @@ const createBeverage = async (req: Request, res: Response) => {
       return res
         .status(400)
         .json({
-            existingBeverage: isBeverageNameExists,
-            error: INCORRECT_PAYLOAD,
-            errorDscription: "Beverage with this name already exists"
+          error: INCORRECT_PAYLOAD,
+          errorDscription: "Beverage with this name already exists",
+          existingBeverage: isBeverageNameExists,
           });
     }
 
@@ -107,6 +113,7 @@ const deleteBeverage = async (req: Request, res: Response) => {
 const editBeverage = async (req: Request, res: Response) => {
   const { beverageUID } = req.params;
   const { name, type, price, description, volume, alcPercentage } = req.body;
+  const imagePath = req.file?.path;
   try {    
     const beverage = await prisma.beverages.findUnique({
       where: { UID: beverageUID },
@@ -131,6 +138,7 @@ const editBeverage = async (req: Request, res: Response) => {
         description,
         volume,
         alcPercentage,
+        imagePath
       },
     });
 

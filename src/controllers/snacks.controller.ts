@@ -41,14 +41,17 @@ const getOneSnack = async (req: Request, res: Response) => {
 };
 
 const createSnack = async (req: Request, res: Response) => { 
-  const { name, type, price, description } = req.body;
+  let { name, type, price, description } = req.body;
+  price = parseInt(price);
+  const imagePath = req.file?.path;
   try {   
     const createPayload = {
       data: {
         name, 
         type,
         price,
-        description
+        description,
+        imagePath
       },
     };
     const isSnackNameExists = await prisma.snacks.findFirst({
@@ -59,9 +62,9 @@ const createSnack = async (req: Request, res: Response) => {
         return res
           .status(400)
           .json({
-              existingSnack: isSnackNameExists,
-              error: INCORRECT_PAYLOAD,
-              errorDscription: "Snack with this name already exists"
+            error: INCORRECT_PAYLOAD,
+            errorDscription: "Snack with this name already exists",
+            existingSnack: isSnackNameExists,
             });
       }
 
@@ -105,6 +108,7 @@ const deleteSnack = async (req: Request, res: Response) => {
 const editSnack = async (req: Request, res: Response) => {
   const { snackUID } = req.params;
   const { name, type, price, description } = req.body;
+  const imagePath = req.file?.path;
   try {    
     const snack = await prisma.snacks.findUnique({
       where: { UID: snackUID },
@@ -126,7 +130,8 @@ const editSnack = async (req: Request, res: Response) => {
         name,
         type,
         price,
-        description
+        description,
+        imagePath
       },
     });
 
