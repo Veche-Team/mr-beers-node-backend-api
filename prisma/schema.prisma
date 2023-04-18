@@ -12,11 +12,15 @@ model Beverages {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name  String
+  category String
   type  String
   price Float
   description String  
-  volume Float      
+  volume Float?   
   alcPercentage Float
+  tags String?
+  isAvaliable Boolean?
+  salePercentage Float?
   imagePath String?
 
    @@unique(fields: [name])
@@ -30,6 +34,7 @@ model Snacks {
   type  String
   price Float
   description String
+  weight Float?
   imagePath String?
 
    @@unique(fields: [name])

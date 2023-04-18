@@ -41,21 +41,27 @@ const getOneBeverage = async (req: Request, res: Response) => {
 };
 
 const createBeverage = async (req: Request, res: Response) => { 
-  let { name, type, price, description, volume, alcPercentage } = req.body;
-  price = parseInt(price);
-  volume = parseInt(volume);
-  alcPercentage = parseInt(alcPercentage);
+  let { name, category, type, price, description, volume, alcPercentage, tags, isAvaliable, salePercentage } = req.body;
+  price = price ? parseInt(price) : null;
+  volume = volume ? parseInt(volume) : null;
+  alcPercentage = alcPercentage ? parseInt(alcPercentage) : null;
+  salePercentage = salePercentage ? parseInt(salePercentage) : null;
+  isAvaliable = Boolean(isAvaliable);
   const imagePath = req.file?.path;
   try {   
     const createPayload = {
       data: {
         name, 
         type,
+        category,
         price,
         description,
         volume,
         alcPercentage,
-        imagePath
+        imagePath,
+        tags, 
+        isAvaliable, 
+        salePercentage 
       },
     };
 
@@ -112,7 +118,13 @@ const deleteBeverage = async (req: Request, res: Response) => {
 
 const editBeverage = async (req: Request, res: Response) => {
   const { beverageUID } = req.params;
-  const { name, type, price, description, volume, alcPercentage } = req.body;
+  let { name, category, type, price, description, volume, alcPercentage, tags, isAvaliable, salePercentage } = req.body;
+  price = price ? parseInt(price) : null;
+  volume = volume ? parseInt(volume) : null;
+  alcPercentage = alcPercentage ? parseInt(alcPercentage) : null;
+  salePercentage = salePercentage ? parseInt(salePercentage) : null;
+  isAvaliable = Boolean(isAvaliable);
+  
   const imagePath = req.file?.path;
   try {    
     const beverage = await prisma.beverages.findUnique({
@@ -133,12 +145,16 @@ const editBeverage = async (req: Request, res: Response) => {
       where: { UID: beverageUID },
       data: {
         name,
+        category,
         type,
         price,
         description,
         volume,
         alcPercentage,
-        imagePath
+        imagePath,
+        tags, 
+        isAvaliable, 
+        salePercentage 
       },
     });
 
