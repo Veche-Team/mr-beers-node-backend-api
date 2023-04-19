@@ -41,8 +41,8 @@ const getOneSnack = async (req: Request, res: Response) => {
 };
 
 const createSnack = async (req: Request, res: Response) => { 
-  let { name, type, price, description, weight } = req.body;
-  price = parseInt(price);
+  let { name, type, price, description, weight, tags } = req.body;
+
   const imagePath = req.file?.path;
   try {   
     const createPayload = {
@@ -52,6 +52,7 @@ const createSnack = async (req: Request, res: Response) => {
         price,
         description,
         weight,
+        tags,
         imagePath
       },
     };
@@ -108,7 +109,7 @@ const deleteSnack = async (req: Request, res: Response) => {
 
 const editSnack = async (req: Request, res: Response) => {
   const { snackUID } = req.params;
-  const { name, type, price, description, weight } = req.body;
+  const { name, type, price, description, weight, tags} = req.body;
   const imagePath = req.file?.path;
   try {    
     const snack = await prisma.snacks.findUnique({
@@ -133,6 +134,7 @@ const editSnack = async (req: Request, res: Response) => {
         price,
         description,
         weight,
+        tags,
         imagePath
       },
     });

@@ -35,6 +35,7 @@ model Snacks {
   price Float
   description String
   weight Float?
+  tags String?
   imagePath String?
 
    @@unique(fields: [name])

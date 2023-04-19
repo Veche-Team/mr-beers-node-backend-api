@@ -42,11 +42,7 @@ const getOneBeverage = async (req: Request, res: Response) => {
 
 const createBeverage = async (req: Request, res: Response) => { 
   let { name, category, type, price, description, volume, alcPercentage, tags, isAvaliable, salePercentage } = req.body;
-  price = price ? parseInt(price) : null;
-  volume = volume ? parseInt(volume) : null;
-  alcPercentage = alcPercentage ? parseInt(alcPercentage) : null;
-  salePercentage = salePercentage ? parseInt(salePercentage) : null;
-  isAvaliable = Boolean(isAvaliable);
+
   const imagePath = req.file?.path;
   try {   
     const createPayload = {
@@ -119,11 +115,6 @@ const deleteBeverage = async (req: Request, res: Response) => {
 const editBeverage = async (req: Request, res: Response) => {
   const { beverageUID } = req.params;
   let { name, category, type, price, description, volume, alcPercentage, tags, isAvaliable, salePercentage } = req.body;
-  price = price ? parseInt(price) : null;
-  volume = volume ? parseInt(volume) : null;
-  alcPercentage = alcPercentage ? parseInt(alcPercentage) : null;
-  salePercentage = salePercentage ? parseInt(salePercentage) : null;
-  isAvaliable = Boolean(isAvaliable);
   
   const imagePath = req.file?.path;
   try {    
