@@ -58,7 +58,7 @@ No filtration yet.
     - `type: String` (required): The type of the beverage. Example: (Разливное/бутылочное)
     - `price: Float` (required): The price of the beverage. Example: (90) - в рублях
     - `description: String` (required): The description of the beverage
-    - `volume: Float` (required): Volume of the beverage. Example: (0,5) - в литрах
+    - `volume: Float` (optional): Volume of the beverage. Example: (0,5) - в литрах
     - `alcPercentage: Float` (required): Alcohol percentage of the beverage. Example: (6,7) - в процентах
     - `tags: String` (optional):  Таги для привлечения внимания. Example: (Отечественное,мужской напиток).
     - `isAvaliable: Boolean` (optional): Доступен ли напиток. Example: (true/false)
